@@ -1,0 +1,198 @@
+\documentclass[%
+	a4paper,		% Paper size in DIN A4 format
+%	oneside,		% One-sided print
+	twoside,		% two-sided print
+	openright, 		% New Chapters always start on the right side
+	12pt,			% fontsize
+%	draft,			% Option distinguishes between document in draft stage and finished document
+%	fleqn			% Mathematical formulas are left-aligned instead of centered
+%	leqno			% Mathematical formulas are numbered on the left-hand side instead of the right-hand side
+	BCOR=5mm,		% Binding correction [rule of thumb for glue binding: (paper_stack/2 + 2)mm]
+	DIV=11,			% how many divisions the page is split into and therefore Size of the margins (smaller number => larger margin) default is 10
+    ]{scrbook} %documentclass scrbook for longer documents wich supports parts on top of chapters, Provides additional options and customization for chapter openings and headings, Typically has a wider inner margin to accommodate binding, suitable for double-sided printing => compared to scrreprt
+
+
+% ==========================================================
+% Integration of simple extension packages
+% ===================================
+
+%\usepackage[utf8]{inputenc} %not needed because luatex has already utf8 encoding 
+\usepackage[english]{babel} % if change between languages is needed \usepackage[ngerman, english]{babel} and then \selectlanguage{ngerman}
+%\usepackage{polyglossia} and %\setmainlanguage{english} does the same
+\usepackage{blindtext}
+\usepackage{scrlayer-scrpage} % Customizing headers, footers and page styles in KOMA-Script documents
+\usepackage{marvosym}   % Package for a lot of symbols like € with \EUR
+\usepackage{scrhack}    % Package to fix some incompatibilities of other packages with KOMA-Script
+\usepackage{wrapfig}    % To wrap text around a figure or a table
+\usepackage{float}		% Option "H" (places object fixed)
+\usepackage{amsmath}    % provides enhanced functionality for typesetting mathematical equations and formulas
+\usepackage{amssymb}    % provides access to additional mathematical symbols and fonts
+\usepackage{empheq}     % adding additional features equations like integration limits on top and below not besides the integral sign 
+\usepackage{dsfont}     % Provides support for double-struck symbols, often used to represent sets of numbers
+\usepackage{amsthm}     % Options for defining and formatting theorem environments, like theorems, lemmas and definitions
+\usepackage{wasysym}    % Symbols from various areas: astronomy, mathematics, checkboxes, arrows
+\usepackage{nicefrac}   % Better fractions in body text (textmode)
+\usepackage{cancel}     % Allows you to draw a "cancel" line through mathematical expressions to indicate that they are canceled
+\usepackage{chemformula}% To write chemical sum formulas like \ch{H2O}
+\usepackage{isotope}    % To write isotopes even easier like \isotope[12][6]{C}
+\usepackage{ifthen}     % To write latex if then statements
+\usepackage{tabularx}	% Create columns of type X, which automatically adjust their width
+\usepackage{array}      % Extend the capabilities of tabulars and mostly columns
+\usepackage{booktabs}   % Offers improved horizontal rules (lines) for tables
+\usepackage{multicol}   % To create columns on a page for text/pictures/ etc.
+\usepackage{tikz}       % Tool for creating graphics, diagrams, and illustrations directly within LaTeX
+\usepackage{suffix}     % Enables Definition of new commands with optional star (*) versions
+\usepackage{advdate}    % To generate the date for tomorrow
+\usepackage{datetime}   % To use date and time and generate formats for it
+\usepackage{fontspec}   % Customize and specify fonts when you are compiling your document with XeLaTeX or LuaLaTeX
+\usepackage{setspace}   % Adjust the linespacing by number not just single and onehalf etc.
+
+
+% =============================================================================================
+% Integration of extension packages with adjustments
+% ===================================
+% Colors
+\PassOptionsToPackage{%     %Package xcolors is already been loaded with other package => options must be passed to it
+    usenames,       % Import standard colors
+    svgnames,       % Import colors from the SVG Standard
+    x11names,       % Import named colors from the Windows System (X11)
+    gray,           % Colors specified using grayscale values 0 to 1
+    table,          % Ensures that colors in tables are processed correctly
+    RGB,            % Colors specified using the RGB color model
+    final           % Ensures that all colors are correctly converted 
+    }{xcolor}
+
+
+% Quotes
+\usepackage[%
+	autostyle,			% automatically detects the language from 'babel' package
+    style = american,
+	english = american,	% american quotes ''word'' in english text
+	german= quotes		% german quotes ,,word'' in german text
+]{csquotes}				% package for qoutes with \enquote{}
+
+% Typesetting source code listings for various programming languages
+\usepackage{listings} 
+\lstset{%             style and syntaxhighlighting in listings
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,                          % Allow line breaks
+  showstringspaces=false,
+  basicstyle=\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  stringstyle=\color{orange},
+  numbers=left,                             % line numbers
+  numberstyle=\footnotesize\ttfamily\color{gray},
+  inputencoding=utf8/latin1,
+  frame=shadowbox,						% Frame around the listings code enviroment
+  rulesepcolor=\color{DarkSlateBlue},		% color of the frame
+  breaklines,								% Automatic wrap if line is too long
+  tabsize=4,								% replaces tabulator with space
+  language=Python,						% default programming language
+  captionpos=b
+}
+
+% Links and hyperlinks
+\usepackage[
+    backref=false,%pages,section% Each bib entry gets list of page or section numbers where it was cited
+    bookmarks=true,             % Generates PDF bookmarks based on sectioning (visible in pdf-readers)
+    hypertexnames=true,         % Ensures unique identifiers if  duplicate labels
+    pageanchor=true,            % Making it possible to link to pages, by giving all pages an anchor
+    pdfpagelabels,              % Page numbering in the PDF file matches the numbering in the document
+    plainpages=false,           % Don't force page numbering to use Arabic numerals for all pages
+    linktocpage,                % Makes the page numbers in the table of contents (TOC) clickable
+    pdfstartpage=1,             % Sets the initial page number when the PDF is opened to page 1
+    pdfdisplaydoctitle=true,    % Displays the document title as the title of the PDF viewer window
+    pdfpagelayout=TwoPageRight, % Sets the layout of the pages when the PDF is opened to two-page view with odd-numbered pages on the right
+    pdfstartview=Fit,           % Sets the initial zoom level of the PDF viewer to fit the width of the page
+    ]{hyperref}             
+\usepackage{url}                            % For the \url{} command
+\usepackage{cleveref}                       % Intelligently handles multiple references: sorting and compressing
+\crefname{equation}{equation}{equations}    % Cleveref adjustment {type_of_refrence}{singular}{plural}
+\crefname{figure}{figure}{figures}
+\crefname{section}{section}{sections}
+\pdfstringdefDisableCommands{\def\\{}}      % If there is a linebreak in the title it is not in the pdf metadata
+\AtBeginDocument{%
+	\hypersetup{%                           % pdf metadata is set with commands defined in titlepage.sty
+	pdfauthor=\insertauthor,
+	pdfcreator=\insertauthor,
+	pdftitle=\inserttitle,
+	}}
+
+% Units
+\usepackage{siunitx}
+\sisetup{%              
+    locale = US,                    % for English unit conventions
+    output-decimal-marker = {.},    % to have a dot as decimal seperator
+    separate-uncertainty,           % to be able to input uncertainties in brackets () which are then output with +-
+    exponent-product = \cdot,       % to have a normal dot for powers of ten
+    %multi-part-units = single      % to have no brackets around value with uncertainty
+    input-digits = 01234567\pi,     % for using pi in \mu_0
+    per-mode = fraction,            % to display units with fraction
+    fraction-function = \nicefrac,  % to use nicefrac fraction for better typesetting
+    bracket-ambiguous-numbers = false, % no brackets for \num{}
+    range-units = repeat}           % repeat unit when giving a range of numbers
+    \DeclareSIUnit\litre{l}         % Otherwise litre is with a capital L
+    \DeclareSIUnit\au{a.u.}         % arbitrary units
+    \DeclareSIUnit{\eu}{\mbox{\EUR}}% € for giving prices
+
+% Graphics and captions
+\PassOptionsToPackage{%       % graphicx seems to be loaded before by other package
+    luatex,         % Specify the driver to be used for including graphics
+    final           % Ensures that the images are included in the document
+    }{graphicx}	    % Main package for the integration of graphics
+\KOMAoptions{
+    captions=tableheading}  % Table headings instead of captions
+\usepackage[%               % Customize the formatting of captions for figures and tables
+    format=hang,            % Caption text will be indented, with subsequent lines aligned with the first line
+%   font={footnotesize,sf}, % Sets the font style of the caption text
+%   labelfont={bf},         % Sets the font style of the label (e.g., "Figure 1:" or "Table 1:")
+%   margin=1cm,             % Sets the margin between the label and the caption text.
+%	aboveskip=5pt,          % Sets the vertical space above the caption.
+%	position=bottom         % pecifies the position of the caption relative to the figure or table.
+    ]{caption}
+\usepackage{subcaption}     % Create sub-figures and sub-tables, each with their own captions and labels
+\usepackage{svg}            % To include SVG (Scalable Vector Graphics) images directly
+
+% Lists
+\usepackage[%       % For lists, such as itemize, enumerate, and description
+    shortlabels,    % To use abbreviated labels for lists (e.g., label=(a) for enumerate lists instead of label=\alph*.)
+    ]{enumitem}    
+\setlist{itemsep=0pt}                           % Removes any extra vertical space between item lines
+\setlist[enumerate]{font=\sffamily\bfseries}    % Sets the font style for labels in enumerate lists
+\setlist[itemize]{label=$\triangleright$}       % Sets the label format for itemize lists
+
+% To-do notes, comments and missing figures
+\usepackage[textwidth=2cm,          % width of the todo entries
+            textsize=footnotesize,  % Font size of the entries
+            english,                % English labels
+            shadow,                 % Drop-shadow for boxes
+            colorinlistoftodos      % Colored markers for different task types
+            ]{todonotes}            % To add "to-do" notes, comments, and remarks during the writing process
+
+% Citations
+\usepackage[%
+    backend=biber,                  % For utf8 encoding
+    style=alphabetic,               % Style for citation and bibliography: [Abc12]
+    ]{biblatex}                     % Best cite package: complete reimplementation of bibliographic facilities
+\renewcommand*{\labelalphaothers}{} % Remove the plus (+) in the citations if refrence has several authors
+\addbibresource{bib/references.bib} % Location of file for the refrences
+
+% --- Definition of some mathematical symbols
+\newcommand{\laplace}{\triangle}            % Laplace operator
+\newcommand{\intd}{\ensuremath\,\text{d}}   % for the d in dx
+\newcommand{\e}{\ensuremath\text{e}}        % Euler number
+\newcommand{\im}{\ensuremath\hat{\imath}}   % imaginary unit
+\newcommand{\N}{\ensuremath\mathbb{N}}      % natural numbers
+\newcommand{\Z}{\ensuremath\mathbb{Z}}      % integers
+\newcommand{\Q}{\ensuremath\mathbb{Q}}      % rational numbers
+\newcommand{\R}{\ensuremath\mathbb{R}}      % real numbers
+\newcommand{\C}{\ensuremath\mathbb{C}}      % complex numbers
+
+
+%========================================================================================================================================================================================================
+
+
+
+\usepackage{silence}
+\WarningFilter{latex}{Unused global option(s)}

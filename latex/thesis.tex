@@ -1,0 +1,73 @@
+% !TeX program = lualatex
+% ==========================================================
+% Sample template for theses
+
+% Authors:	
+    % Original Creator:     Lutz Althüser (2015) coding@l-althueser.de
+    % Coverpage:            Simon May (simon.may@uni-muenster.de) and Fachschaft Physik (fsphys@uni-muenster.de)
+    % Chapterpages:         Philipp Eickholt and Fabian Schoettke
+    % This Version:         johannes.laemmel@uni-muenster.de (2024)
+%
+% Import the preamble
+\input{preamble.sty}
+
+% Import the style files that adjust the layout
+% For the general layout you can use diffrent maincolors (defined by the Uni CD)
+        % Available Options are: black, magenta, darkblue, lightblue, darkcyan, lightcyan, lightgreen, applegreen
+\usepackage[darkcyan]{style/general_layout} % SET YOUR FAVORITE COLOR HERE
+\usepackage{style/titlepage}
+\usepackage{style/coverpage}
+\usepackage{style/TOC}
+
+% Just change the values here and it will be automatically be displayed on cover, title etc.
+\title{This is the long title \\of this long thesis}
+\subtitle{Additional information and descriptions\\will be positioned here.}
+\author{The Thesis Author}
+\place{Münster}
+\date{\tomorrow}
+\thesis{Bachelor thesis}
+\university{Universität Münster}
+\institute{Institut für Kernphysik}
+\institutelogo{The institute logo will appear here}
+\examiners{First Professor}{Second Professor}
+
+% Actual Begin of the document wich is seperated several files
+\begin{document}
+    \pagenumbering{gobble}
+    % --- Insert Cover and Titlepage
+    \makecover
+    \pagenumbering{roman}
+    \maketitle
+    % --- Insert Abstract
+    \cleardoublepage %to ensure that the next page starts on an odd-numbered (right-hand) page
+    \include{chapters/b02-abstract}
+    % --- Insert Affidativ of Academic Integrity
+    \include{chapters/b03-affidavit}
+    % --- Insert the table of contents (toc)
+    \tableofcontents
+    \cleardoublepage
+    % technical reasons for table of contents to have Roman page number
+    \newpage
+    % Arabic page numbers in the rest of the work, page counter is automatically set to 1
+    \pagenumbering{arabic}
+    
+    % --- Insert Introduction
+    \include{chapters/ch00-introduction}
+    % --- Insert all the chapters
+    \include{chapters/ch01}
+    \include{chapters/ch02}
+    % --- Insert conclusion and Outlook
+    \include{chapters/ch10-conclusion-outlook}
+    
+    % --- Appendix
+    % indicates the beginning of the appendix; the numbering of the chapters is changed to consecutive letters
+    \appendix
+    %\listoffigures
+    %\listoftables
+    
+    % --- Insert bibliography
+    \printbibliography
+    
+    % --- Insert Acknowledgements
+    \include{chapters/b04-acknowledgement}
+\end{document}
