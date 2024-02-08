@@ -42,8 +42,6 @@ If you find any issues or have suggestions for improvement, please feel free to 
 
 ## License
 
-This template is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute it for personal or academic purposes.
+This template is licensed under the [GNU License](LICENSE). You are free to use, modify, and distribute it for personal or academic purposes.
 
 ---
-
-Feel free to modify the content to better suit your template and its usage instructions.
