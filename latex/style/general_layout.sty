@@ -1,0 +1,152 @@
+% ==========================================================
+% Setting the style according to the Uni Corporate Design
+% For all the regulations (fonts, CMYK color values etc.) see the CD Manual:
+% https://sso.uni-muenster.de/intern/en/werkzeuge/uni-marketing/corporate-design.html
+% ===================================
+
+%% =============== required packages ============================
+\RequirePackage{xcolor}
+\RequirePackage{fontspec}
+\RequirePackage{scrlayer-scrpage}
+\RequirePackage{setspace}
+
+%% =============== Check the right papersize ============================
+%% ======================================================================
+% check if DIN A4 paper is used (allowing for some error/rounding)
+\newif\ifunistyle@aivpaper
+% A4 width: 210mm
+\ifdim 209.9mm < \paperwidth
+\ifdim \paperwidth < 210.1mm
+% A4 height: 297mm
+\ifdim 296.9mm < \paperheight
+\ifdim \paperheight < 297.1mm
+	\unistyle@aivpapertrue
+\fi\fi\fi\fi
+% print a warning if not using DIN A4 paper
+\ifunistyle@aivpaper\else
+	\PackageWarning{unistyle-titlepage}{%
+		You are not using DIN A4 paper size!\MessageBreak%
+		Instead, the paper size is set to\MessageBreak%
+		\the\paperwidth\space by \the\paperheight.\MessageBreak%
+		This template is only valid for A4 paper\MessageBreak%
+		(spacing will be incorrect).}
+\fi
+
+%% ======================= Adjust the colors ============================
+%% ======================================================================
+% Set the Uni Münster CD colors
+\definecolor{uni_black}{cmyk}{0.00, 0.00, 0.10, 0.90}       % pantoneblack7
+\definecolor{uni_magenta}{cmyk}{0.30, 1.00, 0.00, 0.05}     % pantone234
+\definecolor{uni_darkblue}{cmyk}{1.00, 0.35, 0.00, 0.40}    % pantone7462
+\definecolor{uni_lightblue}{cmyk}{1.00, 0.00, 0.10, 0.00}   % pantone312
+\definecolor{uni_darkcyan}{cmyk}{1.00, 0.00, 0.20, 0.40}    % pantone315
+\definecolor{uni_lightcyan}{cmyk}{1.00, 0.00, 0.40, 0.10}   % pantone3135
+\definecolor{uni_lightgreen}{cmyk}{0.60, 0.00, 1.00, 0.00}  % pantone369
+\definecolor{uni_applegreen}{cmyk}{0.40, 0.00, 1.00, 0.00}  % pantone390
+\newcommand*{\main@color}{uni_lightblue}                    % Set pantone312 as the default main color
+
+% Command to set the main color
+\newcommand*{\set@unistyle@maincolor}[1]{% 
+	\renewcommand*{\main@color}{#1}}
+% When this command is called, it sets the value of \main@color to the value of the argument passed to \set@unistyle@maincolor
+
+% Define the coloring options that can be passed with the \usepackage[]{style/general_layout} command
+\DeclareOption{black}{\set@unistyle@maincolor{uni_black}}           % pantoneblack7
+\DeclareOption{magenta}{\set@unistyle@maincolor{uni_magenta}}       % pantone234
+\DeclareOption{darkblue}{\set@unistyle@maincolor{uni_darkblue}}     % pantone7462
+\DeclareOption{lightblue}{\set@unistyle@maincolor{uni_lightblue}}   % pantone312
+\DeclareOption{darkcyan}{\set@unistyle@maincolor{uni_darkcyan}}     % pantone315
+\DeclareOption{lightcyan}{\set@unistyle@maincolor{uni_lightcyan}}   % pantone3135
+\DeclareOption{lightgreen}{\set@unistyle@maincolor{uni_lightgreen}} % pantone369
+\DeclareOption{applegreen}{\set@unistyle@maincolor{uni_applegreen}} % pantone390
+\ProcessOptions\relax                                               % Actually process the option passed
+\colorlet{maincolor}{\main@color}                                   % Define the (new) color maincolor and set it to the selected one
+
+% Set these colors for links
+\hypersetup{
+    colorlinks=true,            % Enables colored Links
+    citecolor=uni_darkcyan,     % Color for bibliographical citations in text
+    linkcolor=maincolor,        % Color for normal internal refrences
+    menucolor=uni_lightcyan,    % Should change the color of the acrobat menu (toolbar)
+    urlcolor=uni_darkblue,      % Color for linked website URLs
+    pdfborderstyle={/S/U},      % Change frame to solid underline
+}
+
+% ==========================================================
+% Import the Fonts from Meta family according to the corporate design manual
+% ===================================
+% ==== 1st Set the serif font (usually mainfont) to Garamond (Uni Münster serif font)
+\setmainfont{EBGaramond}[
+    Path=style/fonts/garamond/,
+    Extension=.ttf,
+    UprightFont=*-Regular,
+    ItalicFont=*-Italic,
+    BoldFont=*-Bold,
+    BoldItalicFont=*-BoldItalic,]
+% ==== 2nd Set the sans serif font Meta (Uni Münster sans font)
+\setsansfont{MetaOffcPro}[
+    Path=style/fonts/meta/,
+    Extension=.ttf,
+    UprightFont=*-Norm,
+    UprightFeatures={SmallCapsFont={MetaScOffcPro-Norm}},
+    ItalicFont=*-NormIta,
+    ItalicFeatures={SmallCapsFont={MetaScOffcPro-NormIta}},
+    BoldFont=*-Bold,
+    BoldFeatures={SmallCapsFont={MetaScOffcPro-Bold}},
+    BoldItalicFont=*-Bold,
+    BoldItalicFeatures={FakeSlant},]
+\renewcommand{\familydefault}{\sfdefault}       % Set the sans font as default, so most text will be written in Meta font
+
+% ==========================================================
+% Head and footline
+% ===================================
+    \KOMAoptions{headsepline, singlespacing=true}
+    \pagestyle{scrheadings}
+    \addtokomafont{pagehead}{\bfseries}
+    %\clearpairofpagestyles % Reset the header and footer styles
+    \ihead{\pagemark}
+    \ofoot{}
+    \setkomafont{pagenumber}{\bfseries}
+
+% ==========================================================
+% Text composition
+% ===================================
+\KOMAoptions{
+    parskip = half  % Same as parskip package for KOMA-Script: Changes the default behavior regarding paragraph indentation and spacing in the document.
+                        %     Paragraphs are not indented at the beginning.
+                        %     Paragraphs are separated by vertical (half not full) space instead of indentation.
+                        %     No additional vertical space is added after section headings or other structural elements
+}
+\setstretch{1.25}       % Adjust the line spacing here
+\clubpenalty = 10000            % last line of a page = new paragraph prohibited
+\widowpenalty = 10000           % first line of a page = end of paragraph forbidden
+\displaywidowpenalty = 10000    % like widowpenalty, but according to offset formulas
+\binoppenalty = 10000           % no wrap after operator(+-*/) (inline formula)
+\relpenalty = 10000             % no wrap after relation (inline formula)
+\brokenpenalty = 10000          % separation in the last line of a page prohibited
+
+% ==========================================================
+% Links, Hyperlinks and pdf metadata
+% ===================================
+
+
+% ==========================================================
+% Chapter opening page
+% ===================================
+\addtokomafont{chapter}{\color{maincolor}}      % Color the chaptertitles
+\renewcommand*{\chapterlinesformat}[3]{%        % Display number of chapter big on the left side.
+	\parbox[b][\ht\strutbox]{\linewidth}{%
+		\parbox[b]{.8\linewidth}{#3}\hfill
+		\parbox[b]{.2\linewidth}{%
+			\hfill
+			\color{maincolor}
+			\hspace{10mm}%
+			\makebox[1em][c]{
+				\fontsize{80}{80}\selectfont #2%
+			}
+		}%
+	}\par\nobreak
+}
+\renewcommand*{\chapterformat}{\thechapter}    % Actual command that is used in the background when a new chapter is starting
+
+%========================================================================================================================================================================================================

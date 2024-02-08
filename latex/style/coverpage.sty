@@ -1,0 +1,133 @@
+% ==========================================================
+% Create a Uni-Münster branded Cover for the thesis
+% ===================================
+
+%% ========= Required Packages ============
+\RequirePackage{tikz}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{svg}
+
+%% ========= Images and Graphics ============
+\newcommand*{\claimTitle}{\claim}
+\newcommand*{\logoTitle}{\unistylelogo}
+
+% Insert claim and Uni Logo
+\newcommand*{\claim}{%
+	\strut\rlap{\includesvg[width=0.35\textwidth]{style/Claim-2023_ENG}}}
+\newcommand*{\unistylelogo}{%
+    \includesvg[width=0.5\textwidth]{style/Uni-Logo}}
+
+% Define the missing commands needed for the coverpage
+\newcommand{\@institutelogo}{}
+\newcommand{\institutelogo}[1]{%
+	\renewcommand{\@institutelogo}{#1}}
+\providecommand{\@subtitle}{}
+\providecommand{\subtitle}[1]{%
+	\renewcommand{\@subtitle}{#1}}
+
+% Create actual Coverpage with the command \makecover
+\newcommand*{\makecover}{\make@aiv@title}
+\newcommand{\make@aiv@title}{
+\begin{titlepage}
+ {
+ \begin{tikzpicture}[remember picture,overlay]
+%% Create the logo, author, title and year in the upper left corner
+    %% th logo
+    \node [xshift=11.5mm,yshift=-2.5cm,inner sep=0,anchor=west] at (current page.north west)
+    {\logoTitle};
+    %% the author
+    \node (authornode) [xshift=1.85cm,yshift=-5.2cm,anchor=north west] at (current page.north west)
+    [inner sep=0mm,text width=16.45cm, minimum height=24pt] {
+      % Font size: 26pt, line spacing: 11pt
+      % https://sso.uni-muenster.de/intern/en/werkzeuge/uni-marketing/corporate-design.html
+      \color{uni_black}
+      \fontsize{24pt}{24pt}\selectfont
+      \@author \par
+    };    
+    %% the title
+    \node (titlenode) [xshift=1.85cm,yshift=-7.9cm,anchor=base west] at (current page.north west)
+    [inner sep=0mm,text width=16.45cm] {
+      % Font size: 26pt, line spacing: 11pt
+      % https://sso.uni-muenster.de/intern/en/werkzeuge/uni-marketing/corporate-design.html
+      \color{maincolor}
+      \fontsize{26pt}{26pt}\selectfont
+      \llap{> }\@title\par
+    };
+    % the year
+    \node [xshift=1.85cm,yshift=-11.9cm, anchor=south west] at (current page.north west)
+    [inner sep=0,text width=16.45cm, minimum width=16.45cm] {
+      % Font size: 19.5pt, line spacing: 11pt
+      % https://sso.uni-muenster.de/intern/en/werkzeuge/uni-marketing/corporate-design.html
+      \color{uni_black}
+      \fontsize{19.5pt}{19.5pt}\selectfont
+      \justyear{\@date}\par
+    };
+
+%% Create the rectangles that form the big and half visible Logo in the background
+    %% the 1. rectangle
+    \node [yshift=-5.2cm,anchor=north east] at (current page.north east)
+    [rectangle,
+    inner sep=0mm,
+    minimum height=1.4cm,
+    minimum width=0.45cm,
+    fill=maincolor
+    ] {};
+    %% the 2. rectangle
+    \node [yshift=-7.2cm,anchor=north east] at (current page.north east)
+    [rectangle,
+    inner sep=0mm,
+    minimum height=0.7cm,
+    minimum width=1.25cm,
+    fill=maincolor
+    ] {};
+    %% the 3. rectangle
+    \node [yshift=-10.5cm,anchor=north east] (thirdrec) at (current page.north east)
+    [rectangle,
+    inner sep=0,
+    minimum height=1.4cm,
+    minimum width=2.2cm,
+    fill=maincolor
+    ] {};
+    %% the 4. rectangle
+    \node [yshift=-13.2cm, anchor=north west] (fourthrec) at (current
+    page.north west)
+    [rectangle,
+    inner sep=0,
+    minimum height=1.4cm,
+    minimum width=16.450cm,
+    fill=maincolor
+    ] {};
+    %% the 5. rectangle
+    \node [yshift=-17.2cm, anchor=north west] (fifthrec) at (current
+    page.north west)
+    [rectangle,
+    inner sep=0,
+    minimum height=0.7cm,
+    minimum width=21cm,
+    fill=maincolor
+    ] {};
+    %% the 6. rectangle
+    \node [yshift=-23.1cm, anchor=north west] (sixthrec) at (current
+    page.north west)
+    [rectangle,
+    inner sep=0,
+    minimum height=1.4cm,
+    minimum width=21cm,
+    fill=maincolor
+    ] {};
+%% Create the footer with claim and institute logo
+    % xshift: 14mm - 2.5mm (claim PDF file padding) = 11.5mm
+    % yshift: 14mm - 3mm (claim PDF file padding) = 11mm
+    \node [xshift=12.75mm,yshift=11mm, inner sep=0, anchor=south west] at (current page.south west)
+    (claim) {\claimTitle};
+    \node [xshift=-1.4cm,yshift=1.4cm, anchor=south east] at (current page.south east)
+    [inner sep=0mm] {
+      \@institutelogo
+    };
+  \end{tikzpicture}
+  }
+\end{titlepage}
+}
+
+%========================================================================================================================================================================================================

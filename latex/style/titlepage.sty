@@ -1,0 +1,69 @@
+% ==========================================================
+% Adjustments for the titlepage
+% ===================================
+\newdateformat{noday}{\monthname[\THEMONTH] \THEYEAR}  % Format Date: Month, Year
+\newdateformat{noweekday}{\ordinal{DAY} \monthname[\THEMONTH] \THEYEAR} % Format Date: Day Month Year
+\newdateformat{justyear}{\THEYEAR}                      % Format Date: Year
+\newcommand{\tomorrow}{\AdvanceDate[1]\today}           % The date of tomorrow
+%
+% Create new commands for the titlepage
+\makeatletter
+\newcommand{\insertauthor}{\@author}
+\newcommand{\insertdate}{\noweekday{\@date}}
+\newcommand{\inserttitle}{\@title}
+\newcommand{\@place}{}
+\newcommand{\place}[1]{%
+	\renewcommand{\@place}{#1}}
+ \newcommand{\insertplace}{\@place}
+\newcommand{\@thesis}{}
+\newcommand{\thesis}[1]{%
+	\renewcommand{\@thesis}{#1}}
+\newcommand{\@university}{}
+\newcommand{\university}[1]{%
+	\renewcommand{\@university}{#1}}
+\newcommand{\@institute}{}
+\newcommand{\institute}[1]{%
+	\renewcommand{\@institute}{#1}}
+\newcommand{\@firstexaminer}{}
+\newcommand{\@secondexaminer}{}
+\newcommand{\examiners}[2]{%
+	\renewcommand{\@firstexaminer}{#1}\renewcommand{\@secondexaminer}{#2}}
+%
+% Renew the maketitle command which creates the titlepage
+\renewcommand{\maketitle}{
+  \begin{titlepage}         % The look of the actual titlepage begins here
+    \begin{center}
+      {\rmfamily
+      \vspace*{1cm}
+      \includesvg[width=10cm]{style/Uni-Logo}\par
+      \vspace*{10ex}
+      {\huge\sffamily\bfseries\@title\par}
+      \vspace{0.4cm}
+      {\Large\sffamily\@subtitle\par}
+      \vfill
+      {\Large\textsc{\@thesis}\\ \large submitted to the\par}
+      \vspace{0.4cm}
+      {\Large\@university\\ \@institute\par}
+      \vspace{0.4cm}
+      {\large by \\ \Large\@author\par}
+      \vspace{0.4cm}
+      {\Large\noday{\@date}\par}
+      }
+    \end{center}
+    \clearpage
+    \thispagestyle{empty} 
+    \vspace*{\stretch{100}}
+    \hspace*{-2mm}\rule{\linewidth}{2pt}\\%
+    \begin{tabular}{p{0.4\textwidth}p{0.5\textwidth}}
+    	&\\
+    	First examiner: & \@firstexaminer \\
+    	Second examiner: & \@secondexaminer \\ 
+    	&\\
+    	Day of submission: & \@date
+    \end{tabular} 
+    \vspace*{\stretch{1}}
+  \end{titlepage}
+}
+\makeatother
+
+%========================================================================================================================================================================================================

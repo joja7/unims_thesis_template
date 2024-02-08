@@ -1,0 +1,32 @@
+% ==========================================================
+% Adjustments for style and layout of the table of contents
+% ===================================
+\KOMAoptions{
+	toc=listof,		  % List of figures (if used) and tables receive an entry in the table of contents without numbering
+	toc=bibliography, % Bibliography receives an entry in the table of contents without numbering
+    numbers=noenddot,% Numbering in the form 1.2 instead of 1.2.
+%	toc=flat,		% Table of contents is in tabular form (without indenting the lower levels)
+%	chapterprefix,	% Word 'Chapter' is added before chapternumber in heading
+%	appendixprefix	% Word 'Appendix' is added: Appendix A, Appendix B...
+}
+
+% Adjustments for 'deeper' numbering
+% Levels in scrbook: \part (level0) \chapter \section \subsection \subsubsection \paragraph \subparagraph
+\setcounter{secnumdepth}{4}             % Number all levels until subsubsection
+\setcounter{tocdepth}{4}                % Put all levels until subsubsection to TOC
+
+% Do adjustments to the spacing in the TOC
+\RedeclareSectionCommands[
+  beforeskip=-1ex, afterskip=.5ex]      % Adjust vertical space before and after entries
+  {section,subsection,subsubsection} 
+
+% Renew the \tableofcontents command in LaTeX to include additional settings
+\let\originaltableofcontents\tableofcontents
+\renewcommand{\tableofcontents}{%
+  \begingroup
+  \hypersetup{linkcolor=black} % Set link color to black
+  \originaltableofcontents
+  \endgroup
+}
+
+%========================================================================================================================================================================================================
